@@ -20,6 +20,11 @@
 						<span class="text-danger"><?php echo form_error("user_password");?></span>
 					</div>
 					<div class="form-group">
+						<label>Enter the contact number</label>
+						<input type="number" name="number" pattern="\d*" class="form-control" value="<?php echo set_value("number")?>">
+						<span class="text-danger"><?php echo form_error("user_password");?></span>
+					</div>
+					<div class="form-group">
 						<input type="submit" name="register" value="Register" class="btn btn-info">
 					</div>
 				</form>
@@ -34,4 +39,6 @@
 
 		</div>
 	</div>
+
+	 
 	

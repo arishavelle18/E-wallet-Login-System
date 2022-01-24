@@ -4,7 +4,9 @@ require FCPATH."vendor/autoload.php";
 
 		public function __construct(){
 			parent::__construct();
+
 			$this->load->model("Register_model");
+			
 		}
 		public function index(){
 			// pag nakalogin na bawal makapunta sa login and register
@@ -16,7 +18,7 @@ require FCPATH."vendor/autoload.php";
 					$this->load->view("templates/header.php");
 		        	$this->load->view("registration/qrcode",$data);
 		        	$this->load->view("templates/footer.php");
-
+		      		
 		}
 		
 		public function numberValidation(){		
@@ -64,7 +66,7 @@ require FCPATH."vendor/autoload.php";
 			$this->form_validation->set_rules('user_name','Name','required|trim|is_unique[codeigniter_register.name]');
 			$this->form_validation->set_rules('user_email','Email Address','required|trim|valid_email|is_unique[codeigniter_register.email]');
 			$this->form_validation->set_rules('user_password','Password','required');
-
+			$this->form_validation->set_rules('number','Contact Number','required');
 			if($this->form_validation->run() == FALSE){
 
 				 $data['title'] = 'Registration';
@@ -76,6 +78,7 @@ require FCPATH."vendor/autoload.php";
 				$username = $this->input->post("user_name");
 				$useremail = $this->input->post("user_email");
 				$userpassword = $this->input->post("user_password");
+				$contact = $this->input->post("number");
 				$verification_key = md5(rand());
 				$encrypted_password = md5($userpassword);
 				
@@ -84,6 +87,8 @@ require FCPATH."vendor/autoload.php";
 					"email" => $useremail,
 					"password" => $encrypted_password,
 					"verification_key" => $verification_key,
+					"contact" => $contact,
+					"created_at" => date('Y-m-d H:i:s'),
 					"is_email_verified" => 0
 				);
 				$data = $this->security->xss_clean($data);
@@ -143,7 +148,7 @@ require FCPATH."vendor/autoload.php";
 			if($this->session->userdata("logged_in")){
 				redirect("home/homepage");
 			}
-			
+
 			 //Get data from URL
 	        $username = $this->uri->segment(3); //get email from url
 	        $code = $this->uri->segment(4); //get code from url
