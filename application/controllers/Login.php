@@ -10,12 +10,21 @@
 		}
 
 		public function login_form(){
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}
 			$this->data["title"] ="Login"; 
 			$this->load->view("templates/header.php");
 	        $this->load->view("login",$this->data);
 	       	$this->load->view("templates/footer.php");
 		}
 		public function checkUser(){
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}	
+
 			$this->form_validation->set_rules("username","Username","required");
 			$this->form_validation->set_rules("password","Password","required");
 			if($this->form_validation->run() == FALSE){

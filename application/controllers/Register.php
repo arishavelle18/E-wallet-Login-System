@@ -1,5 +1,5 @@
 <?php
-
+require FCPATH."vendor/autoload.php";
 	class Register extends CI_Controller {
 
 		public function __construct(){
@@ -7,12 +7,58 @@
 			$this->load->model("Register_model");
 		}
 		public function index(){
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}
+					$secret = 'XVQ2UIGO75XRUKJO';
+					$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
+					$this->load->view("templates/header.php");
+		        	$this->load->view("registration/qrcode",$data);
+		        	$this->load->view("templates/footer.php");
 
-			 	 $this->load->view("templates/header.php");
-	        	 $this->load->view("register");
-	       		 $this->load->view("templates/footer.php");
 		}
+		
+		public function numberValidation(){		
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}
+				$this->form_validation->set_rules('Token',"Contact Number","required|max_length[6]");
+				if($this->form_validation->run() == False){
+					$data["errors"] = validation_errors();
+					$secret = 'XVQ2UIGO75XRUKJO';
+					$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
+					$this->load->view("templates/header.php");
+		        	$this->load->view("registration/qrcode",$data);
+		        	$this->load->view("templates/footer.php");
+				}
+				else{
+					$secret = 'XVQ2UIGO75XRUKJO';
+					$g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
+					$code = $this->input->post("Token");
+					if($g->checkCode($secret,$code)){
+							$data["title"] = "Registration";
+							$this->load->view("templates/header.php");
+				        	$this->load->view("registration/index",$data);
+				        	$this->load->view("templates/footer.php");
+					}else{
+						// kapag hindi
+							$data["errors"] = "The code is incorrect";
+							$secret = 'XVQ2UIGO75XRUKJO';
+							$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
+							$this->load->view("templates/header.php");
+				        	$this->load->view("registration/qrcode",$data);
+				        	$this->load->view("templates/footer.php");
+					}
+				}
+		}
+
 		public function validation(){
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}
 
 			// check the form
 			$this->form_validation->set_rules('user_name','Name','required|trim|is_unique[codeigniter_register.name]');
@@ -21,8 +67,9 @@
 
 			if($this->form_validation->run() == FALSE){
 
-				 $this->load->view("templates/header.php");
-	        	 $this->load->view("register");
+				 $data['title'] = 'Registration';
+			 	 $this->load->view("templates/header.php");
+	        	 $this->load->view("registration/index.php",$data);
 	       		 $this->load->view("templates/footer.php");
 
 			}else{
@@ -92,6 +139,11 @@
 
 		}
 		public function verify(){
+			// pag nakalogin na bawal makapunta sa login and register
+			if($this->session->userdata("logged_in")){
+				redirect("home/homepage");
+			}
+			
 			 //Get data from URL
 	        $username = $this->uri->segment(3); //get email from url
 	        $code = $this->uri->segment(4); //get code from url
