@@ -5,6 +5,9 @@
 				if($this->session->flashdata('message')){
 					echo '<div class="alert alert-success">'.$this->session->flashdata("message").'</div>';
 					$this->session->unset_userdata('message');
+				}elseif($this->session->flashdata('newpass')){
+					echo '<div class="alert alert-success">'.$this->session->flashdata("newpass").'</div>';
+					$this->session->unset_userdata('newpass');
 				}
 				?>
 		<div class="row">
@@ -20,8 +23,8 @@
 						<input type="text" name="username" class="form-control">
 					</div>
 					<div class="form-group">
-						<label>Password</label>
-						<input type="password" name="password" class="form-control">
+						<label>Pincode</label>
+						<input type="password" name="password" maxlength="6" class="form-control">
 					</div>
 					<div class="form-group">
 						<input type="submit" value="Login" class="btn btn-success form-control">
@@ -32,7 +35,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 mt-2">
-				<a href="#" class="btn btn-info">Forgot Password</a>
+				<a href="<?php echo base_url()?>ForgotPassword/index" class="btn btn-info">Forgot Password</a>
 			</div>
 			<div class="col-md-12 mt-2">
 				<a href="<?php echo base_url();?>register/index" class="btn btn-success">Register</a>

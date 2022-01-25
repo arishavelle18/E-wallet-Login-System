@@ -13,47 +13,11 @@ require FCPATH."vendor/autoload.php";
 			if($this->session->userdata("logged_in")){
 				redirect("home/homepage");
 			}
-					$secret = 'XVQ2UIGO75XRUKJO';
-					$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
+					$data["title"] = "Register";
 					$this->load->view("templates/header.php");
-		        	$this->load->view("registration/qrcode",$data);
+		        	$this->load->view("registration/index",$data);
 		        	$this->load->view("templates/footer.php");
 		      		
-		}
-		
-		public function numberValidation(){		
-			// pag nakalogin na bawal makapunta sa login and register
-			if($this->session->userdata("logged_in")){
-				redirect("home/homepage");
-			}
-				$this->form_validation->set_rules('Token',"Contact Number","required|max_length[6]");
-				if($this->form_validation->run() == False){
-					$data["errors"] = validation_errors();
-					$secret = 'XVQ2UIGO75XRUKJO';
-					$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
-					$this->load->view("templates/header.php");
-		        	$this->load->view("registration/qrcode",$data);
-		        	$this->load->view("templates/footer.php");
-				}
-				else{
-					$secret = 'XVQ2UIGO75XRUKJO';
-					$g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-					$code = $this->input->post("Token");
-					if($g->checkCode($secret,$code)){
-							$data["title"] = "Registration";
-							$this->load->view("templates/header.php");
-				        	$this->load->view("registration/index",$data);
-				        	$this->load->view("templates/footer.php");
-					}else{
-						// kapag hindi
-							$data["errors"] = "The code is incorrect";
-							$secret = 'XVQ2UIGO75XRUKJO';
-							$data['links']= \Sonata\GoogleAuthenticator\GoogleQrUrl::generate('testting', $secret,"e-wallet");
-							$this->load->view("templates/header.php");
-				        	$this->load->view("registration/qrcode",$data);
-				        	$this->load->view("templates/footer.php");
-					}
-				}
 		}
 
 		public function validation(){
@@ -95,7 +59,7 @@ require FCPATH."vendor/autoload.php";
 				$id = $this->register_model->insert($data);
 				
 				if($id > 0){
-					// $subject = "Please verify email for login";
+					 $subject = "Please verify email for login";
 					// $message = "<p>Hi ".$username."</p>
 					// <p>This is email verification mail from Codeigniter Login Register system.For
 					// complete registration process and login into system. First you want to verify you
