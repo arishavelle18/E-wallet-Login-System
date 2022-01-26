@@ -1,15 +1,15 @@
 <body id="emailverify">    
-    <div class="squareyellow">
+    <div class="squareyellow container">
         <div class="card">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="myleftforgot">
                         <h1>E-Wallet</h1>
                         <div class="form-group mb-3 col-md-12">
-                            <a href="<?php echo site_url("Login/login_form");?>"><input type="submit" class="button1" value="Sign In"></a>
+                            <a href="<?php echo site_url("Login/login_form");?>"><input type="submit" class="button1 btn btn-primary" value="Sign In"></a>
                         </div>
                         <div class="form-group mb-3 col-md-12">
-                            <a href="<?php echo site_url("register/index"); ?>"><input type="submit" class="button1" value="Sign Up"></a>
+                            <a href="<?php echo site_url("register/index"); ?>"><input type="submit" class="button1 btn btn-info" value="Sign Up"></a>
                         </div>
                     </div> 
                 </div>
