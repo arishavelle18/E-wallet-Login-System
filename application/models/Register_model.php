@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set("Asia/Manila");
 	class Register_model extends CI_Model{
 
 		private $registerTable = "codeigniter_register";
@@ -22,7 +22,7 @@
   		}
   		public function clear_unconfirmed_post() {
   			$dt = new Datetime();   //create object for current date/time
-			$dt->modify('15 minutes ago');   //substract 15 minutes
+			$dt->modify('2 minutes ago');   //substract 15 minutes
 			$sdt = $dt->format('Y-m-d H:i:s');  //format it into a datetime string
 
 			$this->db->where('created_at <' , $sdt); 

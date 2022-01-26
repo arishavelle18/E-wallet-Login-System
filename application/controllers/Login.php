@@ -1,5 +1,6 @@
 <?php
 require FCPATH."vendor/autoload.php";
+date_default_timezone_set("Asia/Manila");
 	class Login extends CI_Controller {
 		private $data = array();
 
@@ -60,6 +61,36 @@ require FCPATH."vendor/autoload.php";
 				              'success' => "You are now logged in",
 				              'logged_in'=> true
 				            );
+							$subject = "Time in";
+					
+							 $config = array(
+						     'protocol'  => 'smtp',
+						     'smtp_host' => 'smtpout.secureserver.net',
+						     'smtp_port' => 80,
+						     'smtp_user'  => 'thinklikblog@gmail.com', 
+						     'smtp_pass'  => '09123456think!', 
+						     'mailtype'  => 'html',
+						     'charset'    => 'iso-8859-1',
+						     'wordwrap'   => TRUE,
+						     'charset' => 'utf-8',
+				            'newline' => "\r\n",
+				            'mailtype' => 'html',
+				            'validation' => TRUE
+						    );
+							   $emailData = array(
+					            'header' => 'Time you log in',
+					            'username' => $username,
+					            'body' => 'You are login '.date("F j, Y g:i:a"),
+					            );
+						    $this->load->library('email',$config);
+						  
+		      				$this->email->set_mailtype("html");
+						    $this->email->from("thinklikblog@gmail.com");
+						    $this->email->to($userInfo["email"]); 
+						    $this->email->subject($subject);
+						    $this->email->message($this->load->view("update/loginUpdate",$emailData,true)); 
+						    $this->email->send();
+
 				            $this->session->unset_userdata('username');
 	            			$this->session->set_userdata($user_data);
 							$data["title"] = "Home";

@@ -1,5 +1,6 @@
 <?php
 require FCPATH."vendor/autoload.php";
+date_default_timezone_set("Asia/Manila");
 	class Register extends CI_Controller {
 
 		public function __construct(){
@@ -60,16 +61,6 @@ require FCPATH."vendor/autoload.php";
 				
 				if($id > 0){
 					 $subject = "Please verify email for login";
-					// $message = "<p>Hi ".$username."</p>
-					// <p>This is email verification mail from Codeigniter Login Register system.For
-					// complete registration process and login into system. First you want to verify you
-					// email by click this";
-					//  $message = "
-				 //    <p>Hi ".$this->input->post('user_name')."</p>
-				 //    <p>This is email verification mail from Codeigniter Login Register system. For complete registration process and login into system. First you want to verify you email by click this <a href=''".base_url()."register/verify_email/".$verification_key."''>link</a>.</p>
-				 //    <p>Once you click this link your email will be verified and you can login into system.</p>
-				 //    <p>Thanks,</p>
-				 //    ";
 					
 					 $config = array(
 				     'protocol'  => 'smtp',
