@@ -12,9 +12,7 @@
 		public function timecheck(){
 			if($this->input->is_ajax_request()){
 				if($this->Register_model->clear_unconfirmed_post()){;
-					$data = array("response" => "Success");
-				}else{
-					$data = array("response" => "Failed");	
+					$data = array("response" => "Processing ");
 				}
 			}else{
 				$data = array("response" => "Failed");

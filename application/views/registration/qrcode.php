@@ -1,7 +1,7 @@
 <body>
 	<?php echo validation_errors();?>
 	<div class="container mx-auto" > 
-		<h2 class="text-center m-5">Verify this code to continue!</h2>
+		<h2 class="text-center m-5">Scan this code to verify your login</h2>
 		<img class="img-fluid mx-auto d-block p-5 bg-secondary rounded mb-3" src="<?php echo $links?>">
 		
 		<form class="row row-cols-lg-auto g-3 align-items-center" action="numberValidation" method="POST">

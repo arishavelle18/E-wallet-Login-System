@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"sonata-project/google-authenticator": "^2.3"
+		"sonata-project/google-authenticator": "^2.3",
+		"endroid/qr-code": "^4.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

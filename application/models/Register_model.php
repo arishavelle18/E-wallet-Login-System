@@ -22,12 +22,12 @@ date_default_timezone_set("Asia/Manila");
   		}
   		public function clear_unconfirmed_post() {
   			$dt = new Datetime();   //create object for current date/time
-			$dt->modify('2 minutes ago');   //substract 15 minutes
+			$dt->modify('15 minutes ago');   //substract 15 minutes
 			$sdt = $dt->format('Y-m-d H:i:s');  //format it into a datetime string
 
 			$this->db->where('created_at <' , $sdt); 
 		   	$this->db->where('is_email_verified',0);
-		   	$this->db->delete($this->db->dbprefix . $this->registerTable);
+		   	return $this->db->delete($this->db->dbprefix . $this->registerTable);
 		    
   			 
 		} 

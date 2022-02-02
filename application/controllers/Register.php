@@ -52,7 +52,7 @@ date_default_timezone_set("Asia/Manila");
 					"email" => $useremail,
 					"password" => $encrypted_password,
 					"verification_key" => $verification_key,
-					"contact" => $contact,
+					"contact" => md5($contact),
 					"created_at" => date('Y-m-d H:i:s'),
 					"is_email_verified" => 0
 				);
