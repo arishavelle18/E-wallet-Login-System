@@ -22,7 +22,7 @@ date_default_timezone_set("Asia/Manila");
 		}
 		public function index(){
 			// pag nakalogin na bawal makapunta sa login and register
-			if(is_null($this->session->userdata("username"))){
+			if(is_null($this->session->userdata("email"))){
 				redirect("login/login_form");
 			}
 					$secret = 'XVQ2UIGO75XRUKJO';
@@ -33,12 +33,12 @@ date_default_timezone_set("Asia/Manila");
 		      		
 		}
 		public function numberValidation(){		
-			if(is_null($this->session->userdata("username"))){
+			if(is_null($this->session->userdata("email"))){
 				redirect("login/login_form");
 			}
 			// pag nakalogin na bawal makapunta sa login and register
 			
-				$this->form_validation->set_rules('Token',"Contact Number","required|max_length[6]");
+				$this->form_validation->set_rules('Token',"QR CODE","required|max_length[6]");
 				if($this->form_validation->run() == False){
 					$data["errors"] = validation_errors();
 					$secret = 'XVQ2UIGO75XRUKJO';
@@ -52,8 +52,8 @@ date_default_timezone_set("Asia/Manila");
 					$g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
 					$code = $this->input->post("Token");
 					if($g->checkCode($secret,$code)){
-							$username = $this->session->userdata("username");
-							$userInfo = $this->LoginModel->getUser($username);
+							$email = $this->session->userdata("email");
+							$userInfo = $this->LoginModel->getUser(null,$email);
 							$user_data = array(
 				              'id' => $userInfo["id"],
 				              'name' => $userInfo["name"],
@@ -79,7 +79,7 @@ date_default_timezone_set("Asia/Manila");
 						    );
 							   $emailData = array(
 					            'header' => 'Time you log in',
-					            'username' => $username,
+					            'username' => $userInfo["name"],
 					            'body' => 'You are login '.date("F j, Y g:i:a"),
 					            );
 						    $this->load->library('email',$config);
@@ -90,13 +90,10 @@ date_default_timezone_set("Asia/Manila");
 						    $this->email->subject($subject);
 						    $this->email->message($this->load->view("update/loginUpdate",$emailData,true)); 
 						    $this->email->send();
-
-				            $this->session->unset_userdata('username');
+				
+				            $this->session->unset_userdata('email');
 	            			$this->session->set_userdata($user_data);
-							$data["title"] = "Home";
-							$this->load->view("templates/header.php");
-				        	$this->load->view("home",$data);
-				        	$this->load->view("templates/footer.php");
+							redirect("home/homepage");
 					}else{
 						// kapag hindi
 							$data["errors"] = "The code is incorrect";
@@ -115,7 +112,7 @@ date_default_timezone_set("Asia/Manila");
 				redirect("home/homepage");
 			}	
 
-			$this->form_validation->set_rules("username","Username","required");
+			$this->form_validation->set_rules("email","Email","required|valid_email");
 			$this->form_validation->set_rules("password","Password","required");
 			if($this->form_validation->run() == FALSE){
 				$this->data["title"] ="Login"; 
@@ -125,17 +122,19 @@ date_default_timezone_set("Asia/Manila");
 		       	$this->load->view("templates/footer.php");
 			}
 			else{
-				$username = $this->input->post("username");
+				$email = $this->input->post("email");
 				$password = $this->input->post("password");
+
 				$userInfo = array(
-					"name" => $username,
-					"password" => md5($password)
+					"email" => $email,
+					"password" => $password
 				);
+				
 				// para iwas sa mga hacker 
 				$userInfo = $this->security->xss_clean($userInfo);
 				if($this->LoginModel->checkUserInfo($userInfo)){
 					// check muna kung verify
-					if($this->LoginModel->checkUserVerify($username)){
+					if($this->LoginModel->checkUserVerify(null,$email)){
 						// kung verify
 						$this->data['errors'] = "";
 					}
@@ -149,8 +148,8 @@ date_default_timezone_set("Asia/Manila");
 						$this->data['errors'] = "Your account is not found"; 
 				}
 				if(empty($this->data["errors"])){
-						
-            			$this->session->set_userdata('username', $username);
+					
+            			$this->session->set_userdata('email', $email);
 						// $this->data["title"] ="Home"; 
 						// $this->load->view("templates/header.php");
 				  //       $this->load->view("home",$this->data);

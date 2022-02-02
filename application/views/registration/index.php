@@ -5,7 +5,7 @@
 			<div class="panel-body">
 				<form method="post" action="<?php echo base_url();?>register/validation">
 					<div class="form-group">
-						<label>Enter your name :</label>
+						<label>Enter your full name :</label>
 						<input type="text" name="user_name" class="form-control" value="<?php echo set_value('user_name');?>">
 						<span class="text-danger"><?php echo form_error("user_name");?></span>
 					</div>

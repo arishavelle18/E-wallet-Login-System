@@ -8,14 +8,14 @@ date_default_timezone_set("Asia/Manila");
 			$this->db->insert($this->registerTable,$data);
 			return $this->db->insert_id();
 		}
-		public function activate_acc($username,$code,$data){
+		public function activate_acc($contact,$code,$data){
 		    $this->db->select('*');
-		    $this->db->where('name', $username);    
+		    $this->db->where('contact', $contact);    
 		    $this->db->where('verification_key', $code);  
 		    $query = $this->db->get($this->registerTable);
-		   
+		  
 		    if ($query->num_rows() > 0) {
-		      $this->db->where('name', $username);    
+		      $this->db->where('contact', $contact);    
 		      $this->db->where('verification_key', $code);    
 		      return $this->db->update($this->registerTable, $data);
 		    }

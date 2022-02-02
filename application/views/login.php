@@ -19,8 +19,8 @@
 						</div>
 					<?php endif;?>
 					<div class="form-group">
-						<label>Username :</label>
-						<input type="text" name="username" class="form-control">
+						<label>Email :</label>
+						<input type="text" name="email" class="form-control">
 					</div>
 					<div class="form-group">
 						<label>Pincode</label>

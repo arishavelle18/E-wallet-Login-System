@@ -5,14 +5,14 @@
 		private $registerTable = "codeigniter_register";
 
 		public function checkUserInfo($userInfo){
-			$this->db->where("name",$userInfo['name']);
+			$this->db->where("email",$userInfo['email']);
 			$query = $this->db->get($this->registerTable);
 			// check kung may username na ganon 
 			if($query->num_rows() > 0){
 				// check kung compatible sila ng $password at sa db
 				// kung compatible si password sa db
 	
-				if($query->row_array()["password"] == $userInfo['password']){
+				if(password_verify($userInfo['password'], $query->row_array()["password"])){
 
 					return true;
 
@@ -71,8 +71,20 @@
 				$this->db->where("email",$email);
 			}
 			$query = $this->db->get($this->registerTable);
+			
 			return $query->row_array();
 
+		}
+		public function getUserContact($contact){
+			$this->db->where("contact",$contact);
+			$query = $this->db->get($this->registerTable);
+			if($query->num_rows() > 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+			
 		}
 
 	}

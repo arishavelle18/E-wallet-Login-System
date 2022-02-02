@@ -10,6 +10,7 @@
                     <br>
                     <p><?php echo $body?></p>
                     <form action="<?php echo $link?>">
+                        
                         <input type = "submit" class="btn btn-success" value='<?php echo $button?>'/>
                     </form>
                     </div>
